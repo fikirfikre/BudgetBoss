@@ -14,12 +14,12 @@ Expense Tracker App is a simple mobile app that helps the user to keep track of 
  * Charts_flutter package for displaying expense history data in a chart
 ## ScreenShot of the App
 * Onboarding Pages
-
+<div style="display: flex;">
 <img src="/image_for_readMe/on1.png" alt="Onboarding image" width="200" height="400">
 <img src="/image_for_readMe/on2.png" alt="Onboarding image" width="200" height="400">
 <img src="/image_for_readMe/on3.png" alt="Onboarding image" width="200" height="400">
-
+</div>
 * Login Page
 
-<img src="/image_for_readMe/onlogin.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/login.png" alt="login image" width="200" height="400">
 
