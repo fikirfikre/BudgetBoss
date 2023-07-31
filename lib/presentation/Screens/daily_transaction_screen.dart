@@ -150,8 +150,7 @@ class _DailyTransactionState extends State<DailyTransaction> {
   TransactionCache cache = TransactionCache();
   @override
   void initState() {
-    // TODO: implement initState
-    // _transaction = cache.getTransaction(_selectedDay);
+ 
     super.initState();
   }
 
@@ -163,6 +162,7 @@ class _DailyTransactionState extends State<DailyTransaction> {
     var currencies = Provider.of<CurrencyProvider>(context,listen: false);
     var account = Provider.of<AccountCache>(context,listen: false);
     var user = Provider.of<UserCache>(context,listen: false);
+    
     return Scaffold(
       body: Column(
         children: [
@@ -200,12 +200,10 @@ class _DailyTransactionState extends State<DailyTransaction> {
               setState(() {
                 // selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                //  _transaction = cache.getTransaction(selectedDay);
+                
               });
-              // cache.getTransaction(_selectedDay);
-               
-               
-              // await transactionCache.getTransaction(selectedDay);
+              
+            
               
             },
             onFormatChanged: (format) {
@@ -223,7 +221,7 @@ class _DailyTransactionState extends State<DailyTransaction> {
                
              FutureBuilder(
                future: transactionCache.getTransaction(selectedDay,user.user?.id),
-               builder: (context, snapshot) {
+               builder: (context, snapshot){
                  if(snapshot.connectionState == ConnectionState.done){
                         var  lists = snapshot.data;
                  return ListView.builder(
@@ -232,8 +230,11 @@ class _DailyTransactionState extends State<DailyTransaction> {
                         
                         var transaction = CreatedTransaction.empty().fromMap(lists![index]);
                         var date = DateFormat('yyyy-MM-dd').format(transaction.date);
-                        Account selected =   account.listOfAccount.firstWhere((element) => element.id == transaction.id);
-                        var currency = currencies.allCurrency[selected.id ?? 1].symbol;
+                        print(account.listOfAccount);
+                        Account selected =   account.listOfAccount.firstWhere((element) => element.id == transaction.accountId);
+                        int id = selected.id ?? 0;
+                         id = id -1;
+                        var currency = currencies.allCurrency[id].symbol;
                         var amount = transaction.amount;
                         return FutureBuilder<Category>(
                           future: catagoryCache.getItem(transaction.categoryId),

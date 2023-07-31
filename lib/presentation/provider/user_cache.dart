@@ -31,11 +31,14 @@ class UserCache extends ChangeNotifier{
   
   
   }
-   Future getLoggedIn() async{
-    var db = await helper.database;
-    var v = await db.query("users",where: "isLoggedIn = ?", whereArgs: [1]);
-    user = User.fromMap(v[0]);
-    return user;
+   Future getLoggedIn(userId) async{
+    // var db = await helper.database;
+    int id =await userId;
+    var use = await helper.getItem("users", "id", id);
+    // var v = await db.query("users",where: "isLoggedIn = ?", whereArgs: [1]);
+    user = User.fromMap(use[0]);
+    
+    return [user,id];
    }
    logOUt() async{
      var db = await helper.database;

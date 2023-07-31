@@ -1,6 +1,8 @@
 
 import 'dart:io';
 
+import 'package:budget_boss/models/transaction.dart';
+import 'package:budget_boss/presentation/Screens/home_screen.dart';
 import 'package:budget_boss/presentation/Screens/signup_screen.dart';
 import 'package:budget_boss/presentation/provider/account_cache.dart';
 import 'package:budget_boss/presentation/provider/calender_provider.dart';
@@ -13,21 +15,25 @@ import 'package:budget_boss/presentation/routes/routes.dart';
 
 import 'package:budget_boss/presentation/provider/navigation_provider.dart';
 import 'package:budget_boss/presentation/provider/on_boarding_provider.dart';
+import 'package:budget_boss/presentation/widget/bottom_navigation.dart';
 import 'package:budget_boss/utils/database_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+//  import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import 'models/user.dart';
 
 
 Future<void> main() async {
-  if(Platform.isWindows || Platform.isLinux){
-    sqfliteFfiInit();
-  }
+  // if(Platform.isWindows || Platform.isLinux){
+  //   sqfliteFfiInit();
+  // }
 
-  databaseFactory = databaseFactoryFfi;
-  final isLoggedIn =  await isLogged();
+  // databaseFactory = databaseFactoryFfi;
+  WidgetsFlutterBinding.ensureInitialized();
+  var validator = await isLogged();
+  final isLoggedIn =  validator[0];
+  final user = validator[1];
   
   
   runApp( MultiProvider (
@@ -44,16 +50,19 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_)=>CatagoryCache())
 
     ],
-    child: MyApp(isLoggedIn: isLoggedIn!,)));
+    child: MyApp(isLoggedIn: isLoggedIn ?? false,user: user ?? User(user_name: "user_name", email: "email", password: ""),)));
 }
 
-Future<bool?> isLogged() async{
+Future isLogged() async{
   var helper = DatabaseHelper.instance;
-  final data = helper.queryAll("users");
+  final data =  helper.queryAll("users");
+  User? user;
   
- var log =  data.then((list){
+ var log = await data.then((list){
+  
      for(final value in list){
-
+      user = User.fromMap(value);
+      print(user);
     if(User.fromMap(value).isLoggedIn == true) {
       return true;
     }else{
@@ -61,24 +70,42 @@ Future<bool?> isLogged() async{
     }
      }
   });
-   return log;
+   return [await log, user];
 }
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   final bool isLoggedIn;
-   MyApp({super.key,required this.isLoggedIn});
+  final User user;
 
+   MyApp({super.key,required this.isLoggedIn,required this.user});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   var helper = DatabaseHelper.instance;
+    late Future<void> _initFuture;
+   @override
+  void initState() {
+    // TODO: implement initState
+      super.initState();
+       if(widget.isLoggedIn){
+   var userCache = Provider.of<UserCache>(context,listen: false);
+    var account = Provider.of<AccountCache>(context,listen: false);
+    //  var transaction = Provider.of<TransactionCache>(context,listen: false);
+    _initFuture = Future.wait([
+    userCache.getLoggedIn(widget.user.id),
+     account.getAccounts(widget.user.id)]
+   ); }
 
-
+  
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if(isLoggedIn){
-    var user = Provider.of<UserCache>(context,listen: false);
-    user.getLoggedIn();
-    }
-
+ 
   
 
     //  databaseFactory = databaseFactoryFfi;
@@ -105,9 +132,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: mycolor,
       ),
-      initialRoute: isLoggedIn ? '/': '/boot',
+      initialRoute: widget.isLoggedIn ? '/': '/boot',
       onGenerateRoute: RouteGenerator.generateRoute,
-      //  home: SignUpPage(),
+      home: widget.isLoggedIn ? FutureBuilder(
+        future: _initFuture,
+        builder: (context,snapshot){
+          if(snapshot.connectionState ==ConnectionState.waiting){
+            return Center(child: CircularProgressIndicator(),);
+          }else{
+            return Navigator(
+              initialRoute: '/',
+              onGenerateRoute: RouteGenerator.generateRoute,
+            );
+          }
+        } ): Navigator(initialRoute: '/boot',onGenerateRoute: RouteGenerator.generateRoute,),
   
   );}
 }

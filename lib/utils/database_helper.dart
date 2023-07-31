@@ -18,7 +18,7 @@ class DatabaseHelper {
   }
    _initDatabase() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'last');
+    final path = join(databasePath, 'datas');
      return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
       await db.execute(
@@ -101,12 +101,12 @@ CREATE TABLE transactions(
 
   }
 
-//   Future<int> updateItem(String tableName, values,where,whereArg) async{
-//     Database db = await instance.database;
-//     return  db.update('my_table',
-//   {'isLoggedIn': 'values'}, where: where, whereArgs:[whereArg],
-// );
-//   }// Open the database
+  Future<int> updateItem(String tableName,columnName, values,where,whereArg) async{
+    Database db = await instance.database;
+    return  db.update(tableName,
+  {columnName: values}, where: "$where = ?", whereArgs:[whereArg],
+);
+  }// Open the database
 
 
 // Update the value of the column where id is 1

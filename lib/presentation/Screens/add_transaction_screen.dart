@@ -453,7 +453,7 @@ class EnterAmount extends StatelessWidget {
                             autofocus: false,
                             value:accountCache.selectedAccount,
                             onChanged: (Account? value){
-                              print(value?.id);
+                              print(value?.title);
                                       accountCache.selectAccount(value);
                               print(accountCache.listOfAccount.toString());
                             },
@@ -463,7 +463,7 @@ class EnterAmount extends StatelessWidget {
                                 value:account,
                                 child: Container(
                                    padding: const EdgeInsets.only(left: 40),
-                                  child: Text("${account.currencyId}",style:const TextStyle(
+                                  child: Text("${account.title}",style:const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18
                                   ),),
@@ -521,12 +521,22 @@ class EnterAmount extends StatelessWidget {
                   
                         );
                   }
-                  // else if(int.parse(_controller.text).runtimeType == int){
-                  //             print(int.parse(_controller.text).runtimeType );
-                  // }
+                  else if(int.parse(controller.text) > accountCache.selectedAccount.amount){
+                                     showDialog(context:context , 
+                        builder: (BuildContext context){
+                          return const AlertDialog(
+                            title: Text("You do not have enough balance"),
+                            content:  Text("please increase your Account balance"),
+                  
+                          );          
+                        }
+                  
+                        );
+                  }
                   else{
                     try{
                      transactionCache.addAmount(controller.text);
+                    //  accountCache.updateAccount(transactionCache.amount,transactionCache.typeId);
                      transactionCache.addAccount(accountCache.selectedAccount);
                      provider.setPage();
                     }catch(e){
@@ -573,7 +583,8 @@ class SelectDate extends StatelessWidget {
     var currencyCache = Provider.of<CurrencyProvider>(context);
     var accountCache = Provider.of<AccountCache>(context);
     int? id = accountCache.selectedAccount.id;
-    var symbol = currencyCache.allCurrency[id ?? 1];
+    id = id != null? id-1: 0;
+    var symbol = currencyCache.allCurrency[id];
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30, 50, 40, 0),
@@ -631,6 +642,7 @@ class SelectDate extends StatelessWidget {
                       onTap: () async{
                         provider.setPage();
                         transactionCache.addTransaction(user.user?.id);
+                        accountCache.updateAccount(transactionCache.amount,transactionCache.typeId);
                       },
                       child: Container(
                         alignment: Alignment.center,
@@ -669,6 +681,11 @@ class LastPage extends StatelessWidget {
     var transactionCache = Provider.of<TransactionCache>(context);
     var transactionType =Provider.of<TypeCache>(context);
     var currencyCache = Provider.of<CurrencyProvider>(context);
+    var accountCache = Provider.of<AccountCache>(context,listen:false);
+    int? id = accountCache.selectedAccount.id;
+    
+    id = id != null? id-1: 0;
+    var symbol = currencyCache.allCurrency[id];
     return 
     Container(
       padding: const EdgeInsets.all(20),
@@ -733,7 +750,7 @@ class LastPage extends StatelessWidget {
                          Padding(
                            padding: const EdgeInsets.only(left: 30),
                            child: SimpleCard(title: "Amount", label: 
-                           "${currencyCache.currency.symbol}${transactionCache.amount}"),
+                           "${symbol.symbol}${transactionCache.amount}"),
                          ),
 
                          Container(

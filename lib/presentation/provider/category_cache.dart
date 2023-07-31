@@ -20,7 +20,7 @@ class CatagoryCache extends ChangeNotifier{
     await helper.insertItem("category", Category(name: "Automobile", icon: Icons.car_repair, color: Colors.green).toMap());
   }
   Future getCatagory() async{
-    // await insertCatagory();
+    //  / await insertCatagory();
     var lists = await helper.queryAll("category");
     listOfCategory = lists;
     notifyListeners();

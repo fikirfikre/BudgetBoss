@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:budget_boss/presentation/provider/account_cache.dart';
 import 'package:budget_boss/presentation/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -39,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
   var cache = Provider.of<UserCache>(context);
+  var account = Provider.of<AccountCache>(context);
     return Scaffold(
       body: SingleChildScrollView(child:Padding(
         padding: EdgeInsets.all(20),
@@ -126,8 +128,12 @@ class _LoginPageState extends State<LoginPage> {
                          final token = base64Url.encode(utf8.encode("$username:$password:${DateTime.now().microsecondsSinceEpoch}"));
 
                           // ignore: use_build_context_synchronously
+                         bool acc = await account.getAccount(cache.user?.id);
+                          if(acc){
+                             Navigator.of(context).pushReplacementNamed(RouteGenerator.home);       
+                          } else{
                           Navigator.of(context).pushReplacementNamed(RouteGenerator.currencyScreen);
-
+                          }
                         } else{
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Wrong username or passowrd"))

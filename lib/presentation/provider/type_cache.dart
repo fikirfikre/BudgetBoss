@@ -39,7 +39,7 @@ class TypeCache extends ChangeNotifier{
   }
 
   Future getType() async{
-      //  await  insetType();
+          // await  insetType();
     var type = helper.queryAll("transactionType");
    
     print(type.toString());

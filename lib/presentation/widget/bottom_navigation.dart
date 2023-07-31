@@ -1,3 +1,4 @@
+import 'package:budget_boss/presentation/Screens/statstics_screen.dart';
 import 'package:budget_boss/presentation/provider/navigation_provider.dart';
 import 'package:budget_boss/presentation/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class BottomNavigation extends StatelessWidget {
     // const Budget(),
     // 
     // Container(),
-    Container(),
+    Statstics(),
     Container(),
   
     const Profile()

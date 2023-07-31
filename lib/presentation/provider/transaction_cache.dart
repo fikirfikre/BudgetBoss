@@ -88,14 +88,33 @@ class TransactionCache extends ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>> getTransaction(date,userId) async {
+    
     final formatter = DateFormat('yyyy-MM-dd');
     date = formatter.format(date);
     var  result = await helper.database;
-    var transactions = await result.query("transactions",where: "user_id = ? AND date = ?",whereArgs: [userId,date]);
+    var transactions = await result.query("transactions",where: "user_id = ? AND date = ?",whereArgs: [await userId,date]);
     var transaction = await helper.getItem("transactions", "date", "$date");
-    
+    var dd = await result.query("transactions",where: "date LIKE ? AND user_id=?" ,whereArgs: ["2023-07-%",await userId]);
+    print("jjj");
+    // print(dd);
     return transactions;
   }
 
+  Future<List<Map<String, dynamic>>> getMonthTransaction(year,month,userId,type) async {
+   var date = "$year-0$month-%";
+   if(month < 10){
+    date = "$year-0$month-%";
+   }else{
+       date = "$year-$month-%";
+   }
+    print(type);
+    // final formatter = DateFormat('yyyy-MM-dd');
+    // date = formatter.format(date);
+    var  result = await helper.database;
+    var monthTransction = await result.query("transactions",where: "date LIKE ? AND user_id=? AND typeId=?" ,whereArgs: [date,await userId,type]);
+    // print("jjj");
+    //  print(monthTransction);
+    return monthTransction;
+  }
   get listOfTransaction => transactions;
 }
