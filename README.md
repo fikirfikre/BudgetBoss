@@ -12,7 +12,11 @@ Expense Tracker App is a simple mobile app that helps the user to keep track of 
  * SQLite databse for Local storage
  * Provider package for state management
  * Charts_flutter package for displaying expense history data in a chart
+## ScreenShot of the App
+* Onboarding Pages
+<img src="/image_for_readMe/on1.png" alt="Onboarding image" width="100" height="200">
 ![Onboarding Page](/image_for_readMe/on1.png)
 ![Onboarding Page](/image_for_readMe/on2.png)
 ![Onboarding Page](/image_for_readMe/on3.png)
+* Login Page
 ![Login Page](/image_for_readMe/login.png)
