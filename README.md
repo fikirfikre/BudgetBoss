@@ -19,15 +19,22 @@ Expense Tracker App is a simple mobile app that helps the user to keep track of 
 <img src="/image_for_readMe/on2.png" alt="Onboarding image" width="200" height="400">
 <img src="/image_for_readMe/on3.png" alt="Onboarding image" width="200" height="400">
 </div>
-* Login Page
-
+<div style="display: flex;">
 <img src="/image_for_readMe/login.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/home.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/month1.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/month2.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/payee.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/type.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/date.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/amount.png" alt="login image" width="200" height="400">
-<img src="/image_for_readMe/last.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/home.png" alt="home image" width="200" height="400">
+<img src="/image_for_readMe/month1.png" alt="month image" width="200" height="400">
+</div>
+<div style="display: flex;">
+<img src="/image_for_readMe/month2.png" alt="month image" width="200" height="400">
+<img src="/image_for_readMe/payee.png" alt="payee image" width="200" height="400">
+<img src="/image_for_readMe/type.png" alt="type image" width="200" height="400">
+</div>
+
+<div style="display: flex;">
+<img src="/image_for_readMe/date.png" alt="date image" width="200" height="400">
+<img src="/image_for_readMe/amount.png" alt="amount image" width="200" height="400">
+<img src="/image_for_readMe/last.png" alt="last image" width="200" height="400">
+</div>
+
+
 
