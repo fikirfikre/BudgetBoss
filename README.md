@@ -22,4 +22,12 @@ Expense Tracker App is a simple mobile app that helps the user to keep track of 
 * Login Page
 
 <img src="/image_for_readMe/login.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/home.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/month1.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/month2.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/payee.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/type.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/date.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/amount.png" alt="login image" width="200" height="400">
+<img src="/image_for_readMe/last.png" alt="login image" width="200" height="400">
 
