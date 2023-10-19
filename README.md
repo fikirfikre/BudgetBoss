@@ -1,4 +1,5 @@
 # Expense Tracker App
+Expense Tracker App is a simple mobile app that helps the user to keep track of your expenses
 ## Description
 Expense Tracker App is a simple mobile app that helps the user to keep track of your expenses.The App allows you to add, update and delete expenses, catagorize them and view your spending histrory over time.
 ## Feature
